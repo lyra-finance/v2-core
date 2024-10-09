@@ -24,6 +24,8 @@ import "./config-mainnet.sol";
 import "../src/periphery/PerpSettlementHelper.sol";
 import "../src/periphery/OptionSettlementHelper.sol";
 
+// PRIVATE_KEY={} forge script scripts/deploy-perp-only-market.s.sol --private-key {} --rpc-url {} --verify --verifier blockscout --verifier-url {} --broadcast --priority-gas-price 1 
+
 contract DeployCore is Utils {
 
     /// @dev main function
@@ -81,7 +83,7 @@ contract DeployCore is Utils {
         for (uint i = 0; i < config.feedSigners.length; ++i) {
             stableFeed.addSigner(config.feedSigners[i], true);
         }
-        stableFeed.setRequiredSigners(config.feedSigners.length);
+        stableFeed.setRequiredSigners(uint8(config.feedSigners.length));
         deployment.stableFeed = stableFeed;
 
         deployment.dataSubmitter = new OracleDataSubmitter();
